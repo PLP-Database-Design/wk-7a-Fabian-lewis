@@ -15,31 +15,20 @@
 
 
 -- **Answer**:
-CREATE TABLE Orders (
-    OrderID INT PRIMARY KEY,
-    CustomerName VARCHAR(100)
-);
-
-CREATE TABLE OrderProducts (
-    OrderProductID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE ProductDetail (
     OrderID INT,
-    Product VARCHAR(100),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+    CustomerName VARCHAR(100),
+    Products VARCHAR(100)
 );
+INSERT INTO ProductDetail(OrderID, CustomerName, Products)
+VALUES
+(101, 'John Doe', 'Laptop'),
+(101, 'John Doe', 'Mouse'),
+(102, 'Jane Smith', 'Tablet'),
+(102, 'Jane Smith', 'Keyboard'),
+(102, 'Jane Smith', 'Mouse'),
+(103, 'Emily Clark', 'Phone');
 
-
-INSERT INTO Orders (OrderID, CustomerName) VALUES
-(101, 'John Doe'),
-(102, 'Jane Smith'),
-(103, 'Emily Clark');
-
-INSERT INTO OrderProducts (OrderID, Product) VALUES
-(101, 'Laptop'),
-(101, 'Mouse'),
-(102, 'Tablet'),
-(102, 'Keyboard'),
-(102, 'Mouse'),
-(103, 'Phone');
 
 
 
@@ -64,30 +53,31 @@ INSERT INTO OrderProducts (OrderID, Product) VALUES
 
 -- **Answer**:
 
-
-CREATE TABLE Orders (
-    OrderID INT PRIMARY KEY,
-    CustomerName VARCHAR(100)
+ CREATE TABLE orders(
+OrderID INT PRIMARY KEY,
+customerName VARCHAR(100)
 );
-
-
-CREATE TABLE OrderProducts (
-    OrderProductID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderID INT,
-    Product VARCHAR(100),
-    Quantity INT,
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
-);
-
-INSERT INTO Orders (OrderID, CustomerName) VALUES
+INSERT INTO orders (OrderID, CustomerName)
+VALUES
 (101, 'John Doe'),
 (102, 'Jane Smith'),
 (103, 'Emily Clark');
 
-INSERT INTO OrderDetails (OrderID, Product, Quantity) VALUES
-(101, 'Laptop', 2),
-(101, 'Mouse', 1),
-(102, 'Tablet', 3),
-(102, 'Keyboard', 1),
-(102, 'Mouse', 2),
-(103, 'Phone', 1);
+-- Product  table 
+CREATE TABLE product(
+product_id INT primary key,
+productName varchar(100),
+quantity INT,
+order_id INT,
+foreign key(order_id) references orders(OrderID)
+);
+
+insert into product(product_id,productName,quantity,order_id)
+values 
+(1,'laptop',2,101),
+(2,'Mouse',1,101),
+(3,'Tablet',3,102),
+(4,'Keyboard',2,102),
+(5,'Mouse',1,102),
+(6,'Phone',1,103);
+
